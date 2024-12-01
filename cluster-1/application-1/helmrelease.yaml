@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: application3
+  namespace: default
+spec:
+  interval: 1m
+  timeout: 5m
+  chart:
+    spec:
+      chart: charts  # Path to the Helm chart
+      sourceRef:
+        kind: GitRepository
+        name: application3-repo  
+        namespace: flux-system
+  values:
+    image:
+      repository: docker.io/muhammadnaeem42/application3 # {"$imagepolicy": "default:application3-image-policy:image"}
+      pullPolicy: Always  # Always pull the latest image
+      tag: v1.1.1  # {"$imagepolicy": "default:application3-image-policy:tag"}
